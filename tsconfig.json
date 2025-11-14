@@ -1,21 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "ignoreDeprecations": "6.0",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx"
+    "target": "ES2022", // Define a versão alvo do JS emitido
+    "module": "ESNext", // Utiliza o sistema de módulos padrão moderno
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Bibliotecas usadas no projeto
+    "jsx": "react-jsx", // Suporte ao novo JSX transform do React 17+
+    "strict": true, // Ativa verificação estrita de tipos
+    "moduleResolution": "bundler", // Resolucao de modulos para bundlers modernos
+    "esModuleInterop": true, // Suporte a importação interop de módulos CommonJS
+    "skipLibCheck": true, // Ignorar checagem de tipo em libs para acelerar build
+    "forceConsistentCasingInFileNames": true, // Sensibilidade a letras maiusculas/minusculas nos imports
+    "noEmit": true // Não gera arquivos JS, ideal para projetos com bundlers
   },
-  "include": ["src"]
+  "include": ["src"], // Pasta com fontes principais para compilar
+  "exclude": ["node_modules", "build"] // Pastas excluídas da compilação
 }
