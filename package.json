@@ -11,6 +11,7 @@
     "@types/node": "^16.7.13",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "jiti": "^2.6.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-scripts": "5.0.1",
@@ -21,7 +22,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "husky:prepare": "husky install",
+    "prepare": "husky"
   },
   "eslintConfig": {
     "extends": [
@@ -42,10 +45,15 @@
     ]
   },
   "devDependencies": {
+    "@eslint/config-helpers": "^0.4.2",
     "@eslint/js": "^9.39.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.5.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
+    "pinst": "^3.0.0",
+    "prettier": "^2.6.0 || ^3.0.0",
     "prettier-config-standard": "^7.0.0",
     "typescript-eslint": "^8.46.4"
   }
