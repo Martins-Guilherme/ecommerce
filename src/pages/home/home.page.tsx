@@ -5,6 +5,8 @@ const HomePage = () => {
   return (
     <>
       <Header />
+      <h1>Categorias</h1>
+
       <Categories />
     </>
   );
