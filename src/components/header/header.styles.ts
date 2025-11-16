@@ -29,6 +29,10 @@ export const HeaderItem = styled.div`
   display: flex;
   align-items: center;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   &:nth-child(1),
   &:nth-child(2),
   &:nth-child(3) {
