@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './categories.styles.css';
 
 import { getDocs, collection } from 'firebase/firestore';
 
