@@ -6,6 +6,7 @@ import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../../config/firebase.config';
 import Category from '../../types/category-types';
 import { categoryConverter } from '../../converters/firebase.converters';
+import CategoryItem from '../category-item/category-item.component';
 
 const Categories = () => {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -34,7 +35,11 @@ const Categories = () => {
     <>
       <div className="categories-container">
         <div className="categories-content">
-          <h1>Categorias</h1>
+          {categories.map((category) => (
+            <div key={category.id}>
+              <CategoryItem category={category} />
+            </div>
+          ))}
         </div>
       </div>
     </>
