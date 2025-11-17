@@ -2,6 +2,7 @@ import { BsGoogle } from 'react-icons/bs';
 import { FiLogIn } from 'react-icons/fi';
 
 import { useForm } from 'react-hook-form';
+import validator from 'validator';
 
 import CustomButton from '../../components/custom-button/custom-button.components';
 import Header from '../../components/header/header.component';
@@ -14,6 +15,7 @@ import {
   LoginSubtitle,
 } from './login.styles';
 import CustomInput from '../../components/custom-input/custom-input.components';
+import InputErrorMessage from '../../components/input-error-message/input-error-message.component';
 
 const LoginPage = () => {
   const {
@@ -25,6 +27,7 @@ const LoginPage = () => {
   const handleSubmitPress = (data: any) => {
     console.log(data);
   };
+  console.log({ errors });
   return (
     <>
       <Header />
@@ -43,16 +46,31 @@ const LoginPage = () => {
               placeholder="Digite seu e-mail"
               {...register('email', {
                 required: true,
+                validate: (value) => {
+                  return validator.isEmail(value);
+                },
               })}
             />
+            {errors?.email?.type === 'required' && (
+              <InputErrorMessage message="O e-mail é obrigatório." />
+            )}
+            {errors?.email?.type === 'validate' && (
+              <InputErrorMessage message="Por favor, insira um e-mail válido." />
+            )}
           </LoginInputContainer>
           <LoginInputContainer>
             <p>Senha</p>
             <CustomInput
               hasError={!!errors?.password}
               placeholder="Digite sua senha"
-              {...register('password', { required: true })}
+              {...register('password', { required: true, minLength: 6 })}
             />
+            {errors?.password?.type === 'required' && (
+              <InputErrorMessage message="A senha é obrigatória." />
+            )}
+            {errors?.password?.type === 'minLength' && (
+              <InputErrorMessage message="O valor minimo da senha são 6 digitos." />
+            )}
           </LoginInputContainer>
 
           <CustomButton
