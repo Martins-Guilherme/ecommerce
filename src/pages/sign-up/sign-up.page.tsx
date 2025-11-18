@@ -1,12 +1,13 @@
 import { FiLogIn } from 'react-icons/fi';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
+import { useForm } from 'react-hook-form';
+import validator from 'validator';
 
 import CustomButton from '../../components/custom-button/custom-button.components';
 import CustomInput from '../../components/custom-input/custom-input.components';
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component';
 import Header from '../../components/header/header.component';
-
-import { useForm } from 'react-hook-form';
-import validator from 'validator';
 
 import {
   SignUpContainer,
@@ -15,8 +16,10 @@ import {
   SignUpInputContainer,
 } from './sign-up.styles';
 
+import { auth, db } from '../../config/firebase.config';
+
 interface SignUpForm {
-  name: string;
+  firstName: string;
   lastName: string;
   email: string;
   password: string;
@@ -33,8 +36,24 @@ const SignUpPage = () => {
 
   const watchPassword = watch('password');
 
-  const handleSubmmitPress = (data: SignUpForm) => {
-    console.log({ data });
+  const handleSubmmitPress = async (data: SignUpForm) => {
+    try {
+      const userCredentials = await createUserWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+      console.log({ userCredentials });
+
+      await addDoc(collection(db, 'users'), {
+        id: userCredentials.user.uid,
+        email: userCredentials.user.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -47,13 +66,13 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Nome</p>
             <CustomInput
-              hasError={!!errors?.name}
-              {...register('name', {
+              haserror={!!errors?.firstName}
+              {...register('firstName', {
                 required: true,
               })}
               placeholder="Digite seu nome"
             />
-            {errors?.name?.type === 'required' && (
+            {errors?.firstName?.type === 'required' && (
               <InputErrorMessage message="O nome é obrigatório." />
             )}
           </SignUpInputContainer>
@@ -61,7 +80,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Sobrenome</p>
             <CustomInput
-              hasError={!!errors?.lastName}
+              haserror={!!errors?.lastName}
               {...register('lastName', {
                 required: true,
               })}
@@ -75,7 +94,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>E-mail</p>
             <CustomInput
-              hasError={!!errors?.email}
+              haserror={!!errors?.email}
               {...register('email', {
                 required: true,
                 validate: (value) => {
@@ -95,7 +114,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Senha</p>
             <CustomInput
-              hasError={!!errors.password}
+              haserror={!!errors.password}
               {...register('password', {
                 required: true,
                 minLength: 6,
@@ -114,7 +133,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Confirme sua senha</p>
             <CustomInput
-              hasError={!!errors.passwordConfirmation}
+              haserror={!!errors.passwordConfirmation}
               {...register('passwordConfirmation', {
                 required: true,
                 validate: (value) => {
