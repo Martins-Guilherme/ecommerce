@@ -29,7 +29,7 @@ const LoginPage = () => {
     handleSubmit,
   } = useForm<LoginForm>();
 
-  const handleSubmitPress = (data: any) => {
+  const handleSubmitPress = (data: LoginForm) => {
     console.log(data);
   };
   console.log({ errors });
