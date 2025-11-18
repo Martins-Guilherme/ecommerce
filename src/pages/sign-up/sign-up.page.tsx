@@ -1,5 +1,9 @@
 import { FiLogIn } from 'react-icons/fi';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import {
+  AuthError,
+  createUserWithEmailAndPassword,
+  AuthErrorCodes,
+} from 'firebase/auth';
 import { addDoc, collection } from 'firebase/firestore';
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
@@ -31,6 +35,7 @@ const SignUpPage = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
     watch,
   } = useForm<SignUpForm>();
 
@@ -52,7 +57,12 @@ const SignUpPage = () => {
         lastName: data.lastName,
       });
     } catch (error) {
-      console.log(error);
+      const _error = error as AuthError;
+
+      if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
+        setError('email', { type: 'alreadyInUse' });
+        return;
+      }
     }
   };
 
@@ -66,7 +76,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Nome</p>
             <CustomInput
-              haserror={!!errors?.firstName}
+              hasError={!!errors?.firstName}
               {...register('firstName', {
                 required: true,
               })}
@@ -80,7 +90,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Sobrenome</p>
             <CustomInput
-              haserror={!!errors?.lastName}
+              hasError={!!errors?.lastName}
               {...register('lastName', {
                 required: true,
               })}
@@ -94,7 +104,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>E-mail</p>
             <CustomInput
-              haserror={!!errors?.email}
+              hasError={!!errors?.email}
               {...register('email', {
                 required: true,
                 validate: (value) => {
@@ -106,6 +116,10 @@ const SignUpPage = () => {
             {errors?.email?.type === 'required' && (
               <InputErrorMessage message="O e-mail é obrigatório." />
             )}
+            {errors?.email?.type === 'alreadyInUse' && (
+              <InputErrorMessage message="O e-mail já foi utilizado." />
+            )}
+            {errors?.email?.type === 'alreadyInUse'}
             {errors?.email?.type === 'validate' && (
               <InputErrorMessage message="Por favor, insira um e-mail valido." />
             )}
@@ -114,7 +128,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Senha</p>
             <CustomInput
-              haserror={!!errors.password}
+              hasError={!!errors.password}
               {...register('password', {
                 required: true,
                 minLength: 6,
@@ -133,7 +147,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Confirme sua senha</p>
             <CustomInput
-              haserror={!!errors.passwordConfirmation}
+              hasError={!!errors.passwordConfirmation}
               {...register('passwordConfirmation', {
                 required: true,
                 validate: (value) => {
