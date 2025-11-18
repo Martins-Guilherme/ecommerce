@@ -16,6 +16,12 @@ import {
 } from './login.styles';
 import CustomInput from '../../components/custom-input/custom-input.components';
 import InputErrorMessage from '../../components/input-error-message/input-error-message.component';
+import {
+  AuthError,
+  AuthErrorCodes,
+  signInWithEmailAndPassword,
+} from 'firebase/auth';
+import { auth } from '../../config/firebase.config';
 
 interface LoginForm {
   email: string;
@@ -27,10 +33,31 @@ const LoginPage = () => {
     register,
     formState: { errors },
     handleSubmit,
+    setError,
   } = useForm<LoginForm>();
 
-  const handleSubmitPress = (data: LoginForm) => {
-    console.log(data);
+  const handleSubmitPress = async (data: LoginForm) => {
+    try {
+      const userCrendentials = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password,
+      );
+      console.log({ userCrendentials });
+    } catch (error) {
+      console.log({ error });
+      const _error = error as AuthError;
+      // Se a senha estiver incorreta estou associando o type de erro para o valor "mismatch"
+      if (
+        _error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS ||
+        AuthErrorCodes.INVALID_IDP_RESPONSE
+      ) {
+        setError('email', { type: 'mismatch' });
+        setError('password', { type: 'mismatch' });
+      }
+
+      // Se o e-mail estiver incorreto sera associado o valor do tipo para
+    }
   };
   console.log({ errors });
   return (
@@ -62,20 +89,25 @@ const LoginPage = () => {
             {errors?.email?.type === 'validate' && (
               <InputErrorMessage message="Por favor, insira um e-mail válido." />
             )}
+            {errors?.email?.type === 'mismatch' && (
+              <InputErrorMessage message="Por favor, insira um e-mail correto." />
+            )}
           </LoginInputContainer>
           <LoginInputContainer>
             <p>Senha</p>
             <CustomInput
               hasError={!!errors?.password}
-              type="password"
+              {...register('password', {
+                required: true,
+              })}
               placeholder="Digite sua senha"
-              {...register('password', { required: true, minLength: 6 })}
+              type="password"
             />
             {errors?.password?.type === 'required' && (
               <InputErrorMessage message="A senha é obrigatória." />
             )}
-            {errors?.password?.type === 'minLength' && (
-              <InputErrorMessage message="O valor minimo da senha são 6 digitos." />
+            {errors?.password?.type === 'mismatch' && (
+              <InputErrorMessage message="A senha está incorreta." />
             )}
           </LoginInputContainer>
 
