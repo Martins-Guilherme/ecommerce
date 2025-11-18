@@ -11,6 +11,14 @@ import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const navigate = useNavigate();
 
+  const handleCreateAcount = () => {
+    navigate('/sign-up');
+  };
+
+  const handleExploreClick = () => {
+    navigate('/');
+  };
+
   const handleLoginClick = () => {
     navigate('/login');
   };
@@ -19,9 +27,9 @@ const Header = () => {
       <HeaderTitle>CLUB CLOTHING</HeaderTitle>
 
       <HeaderItems>
-        <HeaderItem>Explorar</HeaderItem>
+        <HeaderItem onClick={handleExploreClick}>Explorar</HeaderItem>
         <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-        <HeaderItem>Criar conta</HeaderItem>
+        <HeaderItem onClick={handleCreateAcount}>Criar conta</HeaderItem>
         <HeaderItem>
           <BsCart3 size={25} />{' '}
           <span style={{ fontSize: 12, marginLeft: 5 }}>5</span>
