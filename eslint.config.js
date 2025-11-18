@@ -26,5 +26,6 @@ export default {
     'react/jsx-uses-react': 'off',
     'prettier/prettier': 'error',
     '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };
