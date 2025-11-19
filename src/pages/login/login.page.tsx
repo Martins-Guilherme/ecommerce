@@ -19,9 +19,12 @@ import InputErrorMessage from '../../components/input-error-message/input-error-
 import {
   AuthError,
   AuthErrorCodes,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from 'firebase/auth';
-import { auth } from '../../config/firebase.config';
+import { auth, db, googleProvider } from '../../config/firebase.config';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 interface LoginForm {
   email: string;
@@ -59,7 +62,36 @@ const LoginPage = () => {
       // Se o e-mail estiver incorreto sera associado o valor do tipo para
     }
   };
-  console.log({ errors });
+
+  const handleSignInWithGoogelProvider = async () => {
+    try {
+      const userCredentials = await signInWithPopup(auth, googleProvider);
+      console.log({ userCredentials });
+
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, 'users'),
+          where('id', '==', userCredentials.user.uid),
+        ),
+      );
+
+      const user = querySnapshot.docs[0]?.data();
+
+      if (!user) {
+        const firstName = userCredentials.user.displayName?.split(' ')[0];
+        const lastName = userCredentials.user.displayName?.split(' ')[1];
+        await addDoc(collection(db, 'users'), {
+          id: userCredentials.user.uid,
+          email: userCredentials.user.email,
+          firstName,
+          lastName,
+          provider: 'google',
+        });
+      }
+    } catch (error) {
+      console.log({ error });
+    }
+  };
   return (
     <>
       <Header />
@@ -67,7 +99,10 @@ const LoginPage = () => {
       <LoginContainer>
         <LoginContent>
           <LoginHeadline>Entre com a sua conta</LoginHeadline>
-          <CustomButton startIcon={<BsGoogle size={18} />}>
+          <CustomButton
+            onClick={handleSignInWithGoogelProvider}
+            startIcon={<BsGoogle size={18} />}
+          >
             Entrar com o Google
           </CustomButton>
           <LoginSubtitle>ou entre com seu e-mail</LoginSubtitle>
