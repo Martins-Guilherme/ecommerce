@@ -66,7 +66,6 @@ const LoginPage = () => {
   const handleSignInWithGoogelProvider = async () => {
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
-      console.log({ userCredentials });
 
       const querySnapshot = await getDocs(
         query(
@@ -109,7 +108,7 @@ const LoginPage = () => {
           <LoginInputContainer>
             <p>E-mail</p>
             <CustomInput
-              hasError={!!errors?.email}
+              $hasError={!!errors?.email}
               placeholder="Digite seu e-mail"
               {...register('email', {
                 required: true,
@@ -131,7 +130,7 @@ const LoginPage = () => {
           <LoginInputContainer>
             <p>Senha</p>
             <CustomInput
-              hasError={!!errors?.password}
+              $hasError={!!errors?.password}
               {...register('password', {
                 required: true,
               })}

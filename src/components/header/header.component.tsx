@@ -1,4 +1,5 @@
 import { BsCart3 } from 'react-icons/bs';
+
 import {
   HeaderContainer,
   HeaderItems,
@@ -7,8 +8,11 @@ import {
 } from './header.styles';
 
 import { signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
 import { auth } from '../../config/firebase.config';
+
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/user.context';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,15 +28,22 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate('/login');
   };
+  const { isAuthenticated } = useContext(UserContext);
   return (
     <HeaderContainer>
       <HeaderTitle>CLUB CLOTHING</HeaderTitle>
 
       <HeaderItems>
         <HeaderItem onClick={handleExploreClick}>Explorar</HeaderItem>
-        <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-        <HeaderItem onClick={handleCreateAcount}>Criar conta</HeaderItem>
-        <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+        {!isAuthenticated && (
+          <>
+            <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
+            <HeaderItem onClick={handleCreateAcount}>Criar conta</HeaderItem>
+          </>
+        )}
+        {isAuthenticated && (
+          <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
+        )}
         <HeaderItem>
           <BsCart3 size={25} />{' '}
           <span style={{ fontSize: 12, marginLeft: 5 }}>5</span>
