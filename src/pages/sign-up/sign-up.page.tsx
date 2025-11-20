@@ -21,9 +21,10 @@ import {
 } from './sign-up.styles';
 
 import { auth, db } from '../../config/firebase.config';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../components/loading/loading.component';
 
 interface SignUpForm {
   firstName: string;
@@ -34,6 +35,7 @@ interface SignUpForm {
 }
 
 const SignUpPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const {
     register,
     formState: { errors },
@@ -45,6 +47,7 @@ const SignUpPage = () => {
   const watchPassword = watch('password');
 
   const handleSubmmitPress = async (data: SignUpForm) => {
+    setIsLoading(true);
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -67,6 +70,8 @@ const SignUpPage = () => {
         setError('email', { type: 'alreadyInUse' });
         return;
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -82,6 +87,7 @@ const SignUpPage = () => {
   return (
     <>
       <Header />
+      {isLoading && <Loading />}
       <SignUpContainer>
         <SignUpContent>
           <SignUpHeadline>Crie sua conta</SignUpHeadline>
