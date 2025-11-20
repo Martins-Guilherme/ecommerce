@@ -17,12 +17,12 @@ import { UserContext } from '../../contexts/user.context';
 const Header = () => {
   const navigate = useNavigate();
 
-  const handleCreateAcount = () => {
-    navigate('/sign-up');
-  };
-
   const handleExploreClick = () => {
     navigate('/');
+  };
+
+  const handleSignUpAcount = () => {
+    navigate('/sign-up');
   };
 
   const handleLoginClick = () => {
@@ -31,14 +31,14 @@ const Header = () => {
   const { isAuthenticated } = useContext(UserContext);
   return (
     <HeaderContainer>
-      <HeaderTitle>CLUB CLOTHING</HeaderTitle>
+      <HeaderTitle onClick={handleExploreClick}>CLUB CLOTHING</HeaderTitle>
 
       <HeaderItems>
         <HeaderItem onClick={handleExploreClick}>Explorar</HeaderItem>
         {!isAuthenticated && (
           <>
             <HeaderItem onClick={handleLoginClick}>Login</HeaderItem>
-            <HeaderItem onClick={handleCreateAcount}>Criar conta</HeaderItem>
+            <HeaderItem onClick={handleSignUpAcount}>Criar conta</HeaderItem>
           </>
         )}
         {isAuthenticated && (
