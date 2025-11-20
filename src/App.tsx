@@ -13,6 +13,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 
 import { UserContext } from './contexts/user.context';
 import { userConverter } from './converters/firebase.converters';
+import Loading from './components/loading/loading.component';
 
 const App: FunctionComponent = () => {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -42,7 +43,7 @@ const App: FunctionComponent = () => {
     }
     return setIsInitialized(false);
   });
-  if (isInitialized) return null;
+  if (isInitialized) return <Loading />;
 
   return (
     <>
