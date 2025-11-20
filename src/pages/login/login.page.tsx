@@ -25,10 +25,11 @@ import {
 } from 'firebase/auth';
 import { auth, db, googleProvider } from '../../config/firebase.config';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../contexts/user.context';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../home/home.page';
+import Loading from '../../components/loading/loading.component';
 
 interface LoginForm {
   email: string;
@@ -36,6 +37,8 @@ interface LoginForm {
 }
 
 const LoginPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -53,6 +56,7 @@ const LoginPage = () => {
   }, [isAuthenticated]);
 
   const handleSubmitPress = async (data: LoginForm) => {
+    setIsLoading(true);
     try {
       const userCrendentials = await signInWithEmailAndPassword(
         auth,
@@ -73,10 +77,13 @@ const LoginPage = () => {
       }
 
       // Se o e-mail estiver incorreto sera associado o valor do tipo para
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleSignInWithGoogelProvider = async () => {
+    setIsLoading(true);
     try {
       const userCredentials = await signInWithPopup(auth, googleProvider);
 
@@ -102,12 +109,14 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.log({ error });
+    } finally {
+      setIsLoading(false);
     }
   };
   return (
     <>
       <Header />
-
+      {isLoading && <Loading />}
       <LoginContainer>
         <LoginContent>
           <LoginHeadline>Entre com a sua conta</LoginHeadline>
