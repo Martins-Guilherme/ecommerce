@@ -77,7 +77,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Nome</p>
             <CustomInput
-              hasError={!!errors?.firstName}
+              $hasError={!!errors?.firstName}
               {...register('firstName', {
                 required: true,
               })}
@@ -91,7 +91,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Sobrenome</p>
             <CustomInput
-              hasError={!!errors?.lastName}
+              $hasError={!!errors?.lastName}
               {...register('lastName', {
                 required: true,
               })}
@@ -105,7 +105,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>E-mail</p>
             <CustomInput
-              hasError={!!errors?.email}
+              $hasError={!!errors?.email}
               {...register('email', {
                 required: true,
                 validate: (value) => {
@@ -129,7 +129,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Senha</p>
             <CustomInput
-              hasError={!!errors.password}
+              $hasError={!!errors.password}
               {...register('password', {
                 required: true,
                 minLength: 6,
@@ -148,7 +148,7 @@ const SignUpPage = () => {
           <SignUpInputContainer>
             <p>Confirme sua senha</p>
             <CustomInput
-              hasError={!!errors.passwordConfirmation}
+              $hasError={!!errors.passwordConfirmation}
               {...register('passwordConfirmation', {
                 required: true,
                 validate: (value) => {
