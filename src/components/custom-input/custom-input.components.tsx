@@ -2,7 +2,7 @@ import React, { FunctionComponent, InputHTMLAttributes } from 'react';
 import { CustonInputContainer } from './custon-input.styles';
 
 interface CustomInput extends InputHTMLAttributes<HTMLInputElement> {
-  hasError?: boolean;
+  $hasError?: boolean;
 }
 
 const CustomInput: FunctionComponent<CustomInput> = React.forwardRef(
