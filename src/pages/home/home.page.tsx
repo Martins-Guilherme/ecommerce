@@ -1,4 +1,4 @@
-import Categories from '../../components/categoreis/categories.components';
+import Categories from '../../components/categories/categories.components';
 import Header from '../../components/header/header.component';
 
 const HomePage = () => {
