@@ -4,6 +4,7 @@ import { BsCartCheck } from 'react-icons/bs';
 import { CartContext } from '../../contexts/cart.context';
 
 import CustomButton from '../custom-button/custom-button.components';
+import CartItem from '../cart-item/cart-item.component';
 
 import {
   CartContainer,
@@ -14,14 +15,16 @@ import {
 } from './cart.styles';
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, togleCart } = useContext(CartContext);
+  const { isVisible, togleCart, products } = useContext(CartContext);
   return (
     <CartContainer $isVisible={isVisible}>
       <CartEscapeArea onClick={togleCart} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
 
-        {/* Produtos */}
+        {products.map((product) => (
+          <CartItem key={product.id} product={product} />
+        ))}
 
         <CartTotal>Total: R$25.55</CartTotal>
         <CustomButton startIcon={<BsCartCheck />}>

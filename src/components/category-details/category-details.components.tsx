@@ -58,7 +58,6 @@ const CategoryDetails: FunctionComponent<CategoryDetailsProps> = ({
     navigate(-1);
   };
 
-  console.log(category);
   if (isLoading) return <Loading />;
   return (
     <Container>
