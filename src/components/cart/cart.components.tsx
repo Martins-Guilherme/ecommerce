@@ -16,7 +16,7 @@ import {
 const Cart: FunctionComponent = () => {
   const { isVisible, togleCart } = useContext(CartContext);
   return (
-    <CartContainer isVisible={isVisible}>
+    <CartContainer $isVisible={isVisible}>
       <CartEscapeArea onClick={togleCart} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
