@@ -1,17 +1,29 @@
 import { FunctionComponent } from 'react';
-import { ProductContainer, ProductImage } from './product-item.styles';
-import Category from '../../types/category-types';
+import {
+  ProductContainer,
+  ProductImage,
+  ProductInfo,
+} from './product-item.styles';
+import Product from '../../types/products-types';
 
 interface ProductItemProps {
-  category: Category;
+  product: Product;
 }
 
 export const ProductItem: FunctionComponent<ProductItemProps> = ({
-  category,
+  product,
 }) => {
+  if (!product) {
+    console.log('error no product', product);
+    return null;
+  }
   return (
     <ProductContainer>
-      <ProductImage $imageUrl={category.imageUrl} />
+      <ProductImage $imageUrl={product.imageUrl} />
+      <ProductInfo>
+        <p>{product.name}</p>
+        <p>R${product.price.toFixed(2)}</p>
+      </ProductInfo>
     </ProductContainer>
   );
 };
