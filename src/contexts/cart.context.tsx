@@ -29,8 +29,22 @@ const CartContextProvider: FunctionComponent<ICartProps> = ({ children }) => {
   };
 
   const addProductToCart = (product: Product) => {
+    // Verificar se o produto esta no carrinho
+    const productIsAlreadyInCart = products.some(
+      (item) => item.id === product.id,
+    );
+    // Se o produto estiver no carrinho, soma o valor anterior mais uma unidade
+    if (productIsAlreadyInCart) {
+      return setProducts((products) =>
+        products.map((item) =>
+          item.id == product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        ),
+      );
+    }
+    // Se o produto não estiver no carrinho adiciona 1
     setProducts((prevState) => [...prevState, { ...product, quantity: 1 }]);
-    return 1;
   };
 
   return (
