@@ -1,17 +1,17 @@
 import { FunctionComponent } from 'react';
-import Product from '../../types/products-types';
 import { ProductContainer, ProductImage } from './product-item.styles';
+import Category from '../../types/category-types';
 
 interface ProductItemProps {
-  product: Product;
+  category: Category;
 }
 
 export const ProductItem: FunctionComponent<ProductItemProps> = ({
-  product,
+  category,
 }) => {
   return (
     <ProductContainer>
-      <ProductImage $imageUrl={product.imageUrl} />
+      <ProductImage $imageUrl={category.imageUrl} />
     </ProductContainer>
   );
 };
