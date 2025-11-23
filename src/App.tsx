@@ -17,6 +17,7 @@ import Loading from './components/loading/loading.component';
 import ExplorePage from './pages/explorer/explorer.page';
 import CategoryDetailsPage from './pages/category-details/category-details.page';
 import NotFoundPage from './pages/not-found/not-found.page';
+import Cart from './components/cart/cart.components';
 
 const App: FunctionComponent = () => {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -59,6 +60,7 @@ const App: FunctionComponent = () => {
           <Route path="/category/:id" element={<CategoryDetailsPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        <Cart />
       </BrowserRouter>
     </>
   );

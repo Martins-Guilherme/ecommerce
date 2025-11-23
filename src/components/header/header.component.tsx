@@ -13,9 +13,16 @@ import { auth } from '../../config/firebase.config';
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/user.context';
+import { CartContext } from '../../contexts/cart.context';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useContext(UserContext);
+  const { togleCart } = useContext(CartContext);
+
+  const handleCartClick = () => {
+    togleCart();
+  };
 
   const handleHomePageClick = () => {
     navigate('/');
@@ -32,7 +39,6 @@ const Header = () => {
   const handleLoginClick = () => {
     navigate('/login');
   };
-  const { isAuthenticated } = useContext(UserContext);
   return (
     <HeaderContainer>
       <HeaderTitle onClick={handleHomePageClick}>CLUB CLOTHING</HeaderTitle>
@@ -48,7 +54,7 @@ const Header = () => {
         {isAuthenticated && (
           <HeaderItem onClick={() => signOut(auth)}>Sair</HeaderItem>
         )}
-        <HeaderItem>
+        <HeaderItem onClick={handleCartClick}>
           <BsCart3 size={25} />{' '}
           <span style={{ fontSize: 12, marginLeft: 5 }}>5</span>
         </HeaderItem>
