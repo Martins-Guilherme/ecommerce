@@ -15,7 +15,8 @@ import {
 } from './cart.styles';
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, togleCart, products } = useContext(CartContext);
+  const { isVisible, togleCart, products, productsTotalPrice } =
+    useContext(CartContext);
   return (
     <CartContainer $isVisible={isVisible}>
       <CartEscapeArea onClick={togleCart} />
@@ -26,7 +27,7 @@ const Cart: FunctionComponent = () => {
           <CartItem key={product.id} product={product} />
         ))}
 
-        <CartTotal>Total: R$25.55</CartTotal>
+        <CartTotal>Total: R${productsTotalPrice.toFixed(2)}</CartTotal>
         <CustomButton startIcon={<BsCartCheck />}>
           Ir para o checkout
         </CustomButton>
