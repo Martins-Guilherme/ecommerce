@@ -26,5 +26,6 @@ export const IconContainer = styled.div`
   margin-right: 8px;
   height: 100%;
   display: flex;
+  font-size: 20px;
   align-items: center;
 `;
