@@ -19,6 +19,7 @@ import CategoryDetailsPage from './pages/category-details/category-details.page'
 import NotFoundPage from './pages/not-found/not-found.page';
 import Cart from './components/cart/cart.components';
 import CheckoutPage from './pages/checkout/checkout';
+import AuthenticationGuard from './components/guards/authentication.guards';
 
 const App: FunctionComponent = () => {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -59,7 +60,14 @@ const App: FunctionComponent = () => {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/explorer" element={<ExplorePage />} />
           <Route path="/category/:id" element={<CategoryDetailsPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route
+            path="/checkout"
+            element={
+              <AuthenticationGuard>
+                <CheckoutPage />
+              </AuthenticationGuard>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         <Cart />
