@@ -20,6 +20,7 @@ import NotFoundPage from './pages/not-found/not-found.page';
 import Cart from './components/cart/cart.components';
 import CheckoutPage from './pages/checkout/checkout';
 import AuthenticationGuard from './components/guards/authentication.guards';
+import PaymentConfirmationPage from './pages/payment-confirmation/payment-confirmation.page';
 
 const App: FunctionComponent = () => {
   const [isInitialized, setIsInitialized] = useState(true);
@@ -60,6 +61,10 @@ const App: FunctionComponent = () => {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/explorer" element={<ExplorePage />} />
           <Route path="/category/:id" element={<CategoryDetailsPage />} />
+          <Route
+            path="/payment-confirmation"
+            element={<PaymentConfirmationPage />}
+          />
           <Route
             path="/checkout"
             element={
