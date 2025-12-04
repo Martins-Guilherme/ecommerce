@@ -19,17 +19,16 @@ import InputErrorMessage from '../../components/input-error-message/input-error-
 import {
   AuthError,
   AuthErrorCodes,
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
 } from 'firebase/auth';
 import { auth, db, googleProvider } from '../../config/firebase.config';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../contexts/user.context';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../home/home.page';
 import Loading from '../../components/loading/loading.component';
+import { useSelector } from 'react-redux';
 
 interface LoginForm {
   email: string;
@@ -46,7 +45,9 @@ const LoginPage = () => {
     setError,
   } = useForm<LoginForm>();
 
-  const { isAuthenticated } = useContext(UserContext);
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer,
+  );
   const navigate = useNavigate();
 
   useEffect(() => {

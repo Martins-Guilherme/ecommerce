@@ -1,55 +1,65 @@
-import { FunctionComponent, useContext, useState } from 'react';
+import { FunctionComponent, useContext, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Pages
 import HomePage from './pages/home/home.page';
 import LoginPage from './pages/login/login.page';
 import SignUpPage from './pages/sign-up/sign-up.page';
+import CheckoutPage from './pages/checkout/checkout';
+import NotFoundPage from './pages/not-found/not-found.page';
+import PaymentConfirmationPage from './pages/payment-confirmation/payment-confirmation.page';
+import ExplorePage from './pages/explorer/explorer.page';
+import CategoryDetailsPage from './pages/category-details/category-details.page';
 
 // firebase config
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from './config/firebase.config';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 
-import { UserContext } from './contexts/user.context';
+// Utilities
 import { userConverter } from './converters/firebase.converters';
-import Loading from './components/loading/loading.component';
-import ExplorePage from './pages/explorer/explorer.page';
-import CategoryDetailsPage from './pages/category-details/category-details.page';
-import NotFoundPage from './pages/not-found/not-found.page';
-import Cart from './components/cart/cart.components';
-import CheckoutPage from './pages/checkout/checkout';
 import AuthenticationGuard from './components/guards/authentication.guards';
-import PaymentConfirmationPage from './pages/payment-confirmation/payment-confirmation.page';
+
+// Components
+import Loading from './components/loading/loading.component';
+import Cart from './components/cart/cart.components';
 
 const App: FunctionComponent = () => {
   const [isInitialized, setIsInitialized] = useState(true);
 
-  const { isAuthenticated, logOutUser, loginUser } = useContext(UserContext);
+  const dispatch = useDispatch();
 
-  onAuthStateChanged(auth, async (user) => {
-    const isSigningOut = isAuthenticated && !user;
+  const { isAuthenticated } = useSelector(
+    (rootReducer: any) => rootReducer.userReducer,
+  );
 
-    if (isSigningOut) {
-      logOutUser();
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      const isSigningOut = isAuthenticated && !user;
+
+      if (isSigningOut) {
+        dispatch({ type: 'LOGOUT_USER' });
+        return setIsInitialized(false);
+      }
+
+      const isSigingIn = !isAuthenticated && user;
+      if (isSigingIn) {
+        const querySnapshot = await getDocs(
+          query(
+            collection(db, 'users').withConverter(userConverter),
+            where('id', '==', user.uid),
+          ),
+        );
+        const userFromFireStore = querySnapshot.docs[0]?.data();
+
+        dispatch({ type: 'LOGIN_USER', payload: userFromFireStore });
+        return setIsInitialized(false);
+      }
       return setIsInitialized(false);
-    }
+    });
+  }, [dispatch]);
 
-    const isSigingIn = !isAuthenticated && user;
-    if (isSigingIn) {
-      const querySnapshot = await getDocs(
-        query(
-          collection(db, 'users').withConverter(userConverter),
-          where('id', '==', user?.uid),
-        ),
-      );
-      const userFromFireStore = querySnapshot.docs[0]?.data();
-
-      loginUser(userFromFireStore);
-      return setIsInitialized(false);
-    }
-    return setIsInitialized(false);
-  });
   if (isInitialized) return <Loading />;
 
   return (
