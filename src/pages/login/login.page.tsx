@@ -26,9 +26,8 @@ import { auth, db, googleProvider } from '../../config/firebase.config';
 import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import HomePage from '../home/home.page';
 import Loading from '../../components/loading/loading.component';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/redux.hooks';
 
 interface LoginForm {
   email: string;
@@ -45,8 +44,8 @@ const LoginPage = () => {
     setError,
   } = useForm<LoginForm>();
 
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer,
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer,
   );
   const navigate = useNavigate();
 

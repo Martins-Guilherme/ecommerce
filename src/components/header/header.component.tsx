@@ -11,10 +11,11 @@ import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { LogoutUser } from '../../store/reducers/user/user.actions';
+
 import { CartContext } from '../../contexts/cart.context';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase.config';
-import { Logout } from '../../store/reducers/user/user.actions';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ const Header = () => {
   };
 
   const handleSignOutClick = () => {
-    dispatch(Logout());
+    dispatch(LogoutUser() as any);
     signOut(auth);
   };
 
