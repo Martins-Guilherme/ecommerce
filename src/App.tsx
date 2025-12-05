@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,6 +20,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 // Utilities
 import { userConverter } from './converters/firebase.converters';
 import AuthenticationGuard from './components/guards/authentication.guards';
+import { LoginUser, Logout } from './store/reducers/user/user.actions';
 
 // Components
 import Loading from './components/loading/loading.component';
@@ -39,7 +40,7 @@ const App: FunctionComponent = () => {
       const isSigningOut = isAuthenticated && !user;
 
       if (isSigningOut) {
-        dispatch({ type: 'LOGOUT_USER' });
+        dispatch(Logout());
         return setIsInitialized(false);
       }
 
@@ -53,7 +54,7 @@ const App: FunctionComponent = () => {
         );
         const userFromFireStore = querySnapshot.docs[0]?.data();
 
-        dispatch({ type: 'LOGIN_USER', payload: userFromFireStore });
+        dispatch(LoginUser(userFromFireStore));
         return setIsInitialized(false);
       }
       return setIsInitialized(false);
