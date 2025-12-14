@@ -7,13 +7,13 @@ import {
   HeaderTitle,
 } from './header.styles';
 
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks/redux.hooks';
+import { selectProductsCount } from '../../store/reducers/cart/cart.sectors';
 
 import { LogoutUser } from '../../store/reducers/user/user.actions';
 
-import { CartContext } from '../../contexts/cart.context';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase.config';
 import { toogleCart } from '../../store/reducers/cart/cart.actions';
@@ -22,11 +22,11 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated } = useSelector(
-    (rootReducer: any) => rootReducer.userReducer,
+  const { isAuthenticated } = useAppSelector(
+    (rootReducer) => rootReducer.userReducer,
   );
 
-  const { productsCount } = useContext(CartContext);
+  const productsCount = useAppSelector(selectProductsCount);
 
   const handleHomePageClick = () => {
     navigate('/');
