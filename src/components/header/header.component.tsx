@@ -16,6 +16,7 @@ import { LogoutUser } from '../../store/reducers/user/user.actions';
 import { CartContext } from '../../contexts/cart.context';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase.config';
+import { toogleCart } from '../../store/reducers/cart/cart.actions';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -25,11 +26,7 @@ const Header = () => {
     (rootReducer: any) => rootReducer.userReducer,
   );
 
-  const { togleCart, productsCount } = useContext(CartContext);
-
-  const handleCartClick = () => {
-    togleCart();
-  };
+  const { productsCount } = useContext(CartContext);
 
   const handleHomePageClick = () => {
     navigate('/');
@@ -50,6 +47,10 @@ const Header = () => {
   const handleSignOutClick = () => {
     dispatch(LogoutUser() as any);
     signOut(auth);
+  };
+
+  const handleCartClick = () => {
+    dispatch(toogleCart() as any);
   };
 
   return (

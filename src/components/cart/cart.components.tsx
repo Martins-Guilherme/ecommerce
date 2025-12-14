@@ -14,21 +14,31 @@ import {
   CartTotal,
 } from './cart.styles';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux.hooks';
+import { useDispatch } from 'react-redux';
+import { toogleCart } from '../../store/reducers/cart/cart.actions';
 
 const Cart: FunctionComponent = () => {
-  const { isVisible, togleCart, products, productsTotalPrice, productsCount } =
-    useContext(CartContext);
+  const dispatch = useDispatch();
+
+  const { isVisible, products } = useAppSelector((state) => state.cartReducer);
+
+  const { productsTotalPrice, productsCount } = useContext(CartContext);
 
   const navigate = useNavigate();
 
   const handleCheckoutClick = () => {
-    togleCart();
+    dispatch(toogleCart());
     navigate('/checkout');
+  };
+
+  const handleScapeAreaClick = () => {
+    dispatch(toogleCart());
   };
 
   return (
     <CartContainer $isVisible={isVisible}>
-      <CartEscapeArea onClick={togleCart} />
+      <CartEscapeArea onClick={handleScapeAreaClick} />
       <CartContent>
         <CartTitle>Seu Carrinho</CartTitle>
 

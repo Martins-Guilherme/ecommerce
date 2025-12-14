@@ -12,7 +12,10 @@ const initialState: InitialState = {
   isAuthenticated: false,
 };
 
-const userReducer = (state = initialState, action: UserActions): InitialState => {
+const userReducer = (
+  state = initialState,
+  action: UserActions,
+): InitialState => {
   switch (action.type) {
     case UserActionType.LOGIN:
       console.log('teste entrada login_User');
