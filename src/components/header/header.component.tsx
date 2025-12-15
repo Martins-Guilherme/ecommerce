@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectProductsCount } from '../../store/reducers/cart/cart.sectors';
 
-import { LogoutUser } from '../../store/reducers/user/user.actions';
+import { logoutUser } from '../../store/toolkit/user/user.slice';
 
 import { signOut } from 'firebase/auth';
 import { auth } from '../../config/firebase.config';
@@ -45,7 +45,7 @@ const Header = () => {
   };
 
   const handleSignOutClick = () => {
-    dispatch(LogoutUser() as any);
+    dispatch(logoutUser() as any);
     signOut(auth);
   };
 

@@ -5,6 +5,7 @@ const CartActionType = {
   increaseCartProductQuantity: 'cart/increaseCartProductQuantity' as const,
   decreaseCartProductQuantity: 'cart/decreaseCartProductQuantity' as const,
   clearCartProducts: 'cart/clearProducts' as const,
+  register: 'register' as const,
 };
 
 export default CartActionType;

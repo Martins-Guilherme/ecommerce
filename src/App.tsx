@@ -20,7 +20,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 // Utilities
 import { userConverter } from './converters/firebase.converters';
 import AuthenticationGuard from './components/guards/authentication.guards';
-import { LoginUser, LogoutUser } from './store/reducers/user/user.actions';
+import { loginUser, logoutUser } from './store/toolkit/user/user.slice';
 import { useAppSelector } from './hooks/redux.hooks';
 
 // Components
@@ -41,7 +41,7 @@ const App: FunctionComponent = () => {
       const isSigningOut = isAuthenticated && !user;
 
       if (isSigningOut) {
-        dispatch(LogoutUser() as any);
+        dispatch(logoutUser() as any);
         return setIsInitialized(false);
       }
 
@@ -55,7 +55,7 @@ const App: FunctionComponent = () => {
         );
         const userFromFireStore = querySnapshot.docs[0]?.data();
 
-        dispatch(LoginUser(userFromFireStore) as any);
+        dispatch(loginUser(userFromFireStore) as any);
         return setIsInitialized(false);
       }
       return setIsInitialized(false);
