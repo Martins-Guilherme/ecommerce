@@ -18,7 +18,6 @@ const userReducer = (
 ): InitialState => {
   switch (action.type) {
     case UserActionType.LOGIN:
-      console.log('teste entrada login_User');
       return { ...state, currentUser: action.payload, isAuthenticated: true };
     case UserActionType.LOGOUT:
       return { ...state, currentUser: null, isAuthenticated: false };

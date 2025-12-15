@@ -1,4 +1,4 @@
-import { FunctionComponent, ReactElement, useContext, useEffect } from 'react';
+import { FunctionComponent, ReactElement, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import CategoryContextProvider from './contexts/category.context';
 import { Provider } from 'react-redux';
 // @ts-expect-error error
 import { PersistGate } from 'redux-persist/integration/react';
@@ -16,9 +15,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate persistor={persistedStore}>
-        <CategoryContextProvider>
-          <App />
-        </CategoryContextProvider>
+        <App />
       </PersistGate>
     </Provider>
   </React.StrictMode>,
