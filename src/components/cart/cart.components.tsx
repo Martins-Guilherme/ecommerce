@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { useDispatch } from 'react-redux';
-import { toogleCart } from '../../store/reducers/cart/cart.actions';
+import { toogleCart } from '../../store/toolkit/cart/cart.slice';
 
 import {
   selectProductsCount,
