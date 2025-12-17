@@ -15,6 +15,11 @@ export const CheckoutContainer = styled.div`
 
   button {
     width: 650px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+    padding: 30px;
   }
 `;
 
@@ -28,6 +33,10 @@ export const CheckoutProducts = styled.div`
   overflow-y: scroll;
   margin-top: 15px;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 
   /* width */
   ::-webkit-scrollbar {
@@ -55,4 +64,8 @@ export const CheckoutTotal = styled.p`
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
