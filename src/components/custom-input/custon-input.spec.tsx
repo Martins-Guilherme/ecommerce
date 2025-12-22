@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { render} from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 import CustomInput from './custom-input.components';
-import Colors from '../../theme/theme.colors';
 
 describe('Custom Input', () => {
   it('should render with error if has error is true', () => {
@@ -10,7 +10,6 @@ describe('Custom Input', () => {
     const input = getByPlaceholderText('lorem ipsum');
 
     // True: ecSgWf
-    // False: lmDDhP
     expect(input).toHaveClass('ecSgWf');
   });
 
@@ -18,8 +17,21 @@ describe('Custom Input', () => {
     const { getByPlaceholderText } = render(
       <CustomInput placeholder="lorem ipsum" $hasError={false} />,
     );
-    const input = getByPlaceholderText('lorem ipsum')
+    const input = getByPlaceholderText('lorem ipsum');
 
-    expect(input).toHaveClass('lmDDhP')
+    // False: lmDDhP
+    expect(input).toHaveClass('lmDDhP');
+  });
+
+  it('should change value when user types', () => {
+    const { getByPlaceholderText, getByDisplayValue } = render(
+      <CustomInput placeholder="lorem ipsum" $hasError={false} />,
+    );
+    const input = getByPlaceholderText('lorem ipsum');
+
+    // fireEvent.change(input, { target: { value: 'Dolar Sit' } });
+    userEvent.type(input, 'Dolar Sit')
+    
+    getByDisplayValue('Dolar Sit');
   });
 });
