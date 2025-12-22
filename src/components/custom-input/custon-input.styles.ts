@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Colors from '../../theme/theme.colors';
 
 type CustonInputContainerProps = {
-  hasError?: boolean;
+  $hasError?: boolean;
 };
 
 export const CustonInputContainer = styled.input<CustonInputContainerProps>`
@@ -15,15 +15,15 @@ export const CustonInputContainer = styled.input<CustonInputContainerProps>`
   border-radius: 10px;
   color: ${Colors.text.dark};
   border: ${(props) =>
-    props.hasError ? ` 2px solid ${Colors.error}` : 'none'};
+    props.$hasError ? ` 2px solid ${Colors.error}` : 'none'};
 
   &::placeholder {
     color: ${(props) =>
-      props.hasError ? Colors.error : Colors.input.placeholder};
+      props.$hasError ? Colors.error : Colors.input.placeholder};
   }
 
   &:focus {
     outline: ${(props) =>
-      props.hasError ? 'none' : `2px solid ${Colors.input.placeholder}`};
+      props.$hasError ? 'none' : `2px solid ${Colors.input.placeholder}`};
   }
 `;
