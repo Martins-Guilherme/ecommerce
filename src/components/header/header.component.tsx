@@ -7,7 +7,7 @@ import {
   HeaderTitle,
 } from './header.styles';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { selectProductsCount } from '../../store/reducers/cart/cart.sectors';

@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import logger from 'redux-logger';
-import { thunk } from 'redux-thunk';
 
 // @ts-expect-error error
 import storage from 'redux-persist/lib/storage';
