@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from '../../store/root-reduces';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
-import { RootState } from '../../store/store';
 import { BrowserRouter } from 'react-router';
+import rootReducer from '../store/root-reduces';
+import { RootState } from '../store/store';
 
 export const renderWithRedux = (
   component: React.ReactElement,
