@@ -12,7 +12,7 @@ import {
   CartTotal,
 } from './cart.styles';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { useAppSelector } from '../../hooks/redux.hooks';
 import { useDispatch } from 'react-redux';
