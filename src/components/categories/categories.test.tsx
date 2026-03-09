@@ -1,0 +1,32 @@
+import * as firestore from 'firebase/firestore';
+import { renderWithRedux } from '../../helpers/test.helpers';
+import Categories from './categories.components';
+import { getByText } from '@testing-library/dom';
+
+jest.mock('firebase/firestore');
+
+describe('Categories', () => {
+  it('should fetch and shows categories', async () => {
+    const mockedFirestore = firestore as any;
+    mockedFirestore.getDocs.mockReturnValue([
+      {
+        data() {
+          return {
+            id: '1',
+            displayName: 'Lorem Ipsum',
+          };
+        },
+      },
+    ]);
+
+    mockedFirestore.collection.mockReturnValue({
+      withConverter: () => {},
+    });
+
+    const { getByText, findByText } = renderWithRedux(<Categories />, {
+      preloadedState: {} as any,
+    });
+
+    await findByText('Lorem Ipsum');
+  });
+});
