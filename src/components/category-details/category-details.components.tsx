@@ -17,7 +17,7 @@ import {
   IconContainer,
   ProductsContainer,
 } from './category-details.styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { ProductItem } from '../product-item/product-item.components';
 
