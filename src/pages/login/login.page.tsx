@@ -63,20 +63,18 @@ const LoginPage = () => {
         data.email,
         data.password,
       );
-      console.log({ userCrendentials });
     } catch (error) {
-      console.log({ error });
       const _error = error as AuthError;
-      // Se a senha estiver incorreta estou associando o type de erro para o valor "mismatch"
-      if (
-        _error.code === AuthErrorCodes.INVALID_LOGIN_CREDENTIALS ||
-        AuthErrorCodes.INVALID_IDP_RESPONSE
-      ) {
-        setError('email', { type: 'mismatch' });
-        setError('password', { type: 'mismatch' });
+      // Se a senha ou o email estiver incorreta estou retornando o seu valor
+      //  para o type de erro do valor
+      if (_error.code === AuthErrorCodes.INVALID_PASSWORD) {
+        return setError('password', { type: 'mismatch' });
+      }
+      if (_error.code === AuthErrorCodes.USER_DELETED) {
+        return setError('email', { type: 'notFound' });
       }
 
-      // Se o e-mail estiver incorreto sera associado o valor do tipo para
+      // Se o e-mail e senha estiver incorreto o valor loading sera false
     } finally {
       setIsLoading(false);
     }
@@ -145,8 +143,11 @@ const LoginPage = () => {
             {errors?.email?.type === 'validate' && (
               <InputErrorMessage message="Por favor, insira um e-mail válido." />
             )}
-            {errors?.email?.type === 'mismatch' && (
+            {/* {errors?.email?.type === 'mismatch' && (
               <InputErrorMessage message="Por favor, insira um e-mail correto." />
+            )} */}
+            {errors?.email?.type === 'notFound' && (
+              <InputErrorMessage message="O e-mail não foi encontrado." />
             )}
           </LoginInputContainer>
           <LoginInputContainer>
