@@ -22,7 +22,7 @@ import {
 
 import { auth, db } from '../../config/firebase.config';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import Loading from '../../components/loading/loading.component';
 import { useAppSelector } from '../../hooks/redux.hooks';
 
