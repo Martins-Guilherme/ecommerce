@@ -34,4 +34,26 @@ describe('Sign Up', () => {
 
     await findByText('Por favor, insira um e-mail valido.');
   });
+
+  it('should show error when password and password confirmation are diferent', async () => {
+    const { getByText, findByText, getByPlaceholderText } = renderWithRedux(
+      <SignUpPage />,
+      {} as any,
+    );
+
+    const passwordInput = getByPlaceholderText(/digite sua senha/i);
+
+    userEvent.type(passwordInput, '12345');
+
+    const passwordConfirmation = getByPlaceholderText(
+      /digite novamente sua senha/i,
+    );
+    userEvent.type(passwordConfirmation, '123456789');
+
+    const submit = getByText('Criar Conta', { selector: 'button' });
+    userEvent.click(submit);
+
+    await findByText('As senhas não conferem.');
+  });
+  
 });
