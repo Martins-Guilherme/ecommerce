@@ -67,8 +67,7 @@ const SignUpPage = () => {
       const _error = error as AuthError;
 
       if (_error.code === AuthErrorCodes.EMAIL_EXISTS) {
-        setError('email', { type: 'alreadyInUse' });
-        return;
+        return setError('email', { type: 'alreadyInUse' });
       }
     } finally {
       setIsLoading(false);
@@ -140,7 +139,6 @@ const SignUpPage = () => {
             {errors?.email?.type === 'alreadyInUse' && (
               <InputErrorMessage message="O e-mail já foi utilizado." />
             )}
-            {errors?.email?.type === 'alreadyInUse'}
             {errors?.email?.type === 'validate' && (
               <InputErrorMessage message="Por favor, insira um e-mail valido." />
             )}
